@@ -185,12 +185,19 @@
       
     <div class="main-container">
         <div class="side-bar">
-
-                <a href="{{ route('createproduct.index') }}">Create Product</a><br/>
+            @auth()
+@if (auth()->user()->isAdmin())
+     <a href="{{ route('createproduct.index') }}">Create Product</a><br/>
+@endif
+               
                 <a href="{{ route('productlist') }}">Product List</a><br/>
-                <a href="{{ route('category.index') }}">Create Category</a><br/>
-                <a href="{{ route('categorylist') }}">Category List</a><br/>
+                @if(auth()->user()->isAdmin())
+                    <a href="{{ route('category.index') }}">Create Category</a><br/>
+                    <a href="{{ route('categorylist') }}">Category List</a><br/>
+                @endif
                 <a href="{{ route('cart.show') }}">View Cart</a><br/>
+            @endauth
+
         </div>
         <div class="content-area">
             <h3>Dashboard</h3>

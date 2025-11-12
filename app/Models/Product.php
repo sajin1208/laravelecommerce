@@ -22,7 +22,7 @@ class Product extends Model
         'product_image',
     ];
      public function getPaddedProductIdAttribute()
-    {
+    {   
         return 'P' . str_pad($this->attributes['product_id'], 5, '0', STR_PAD_LEFT);
     }
 }

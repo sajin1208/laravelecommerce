@@ -19,14 +19,15 @@ class LoginController
         $request->validate([
             'username'=> 'required|string|max:255',
             'email'=> 'required|string|email|max:255',
-            'password'=> 'required|string|min:8|confirmed',
+            'password'=> 'required|string|min:3|confirmed',
         ]);
-        User::create([
+        $user = User::create([
             'name'=>$request->input('username'),
             'email'=>$request->input('email'),
-            'password'=>$request->input('password')  
+            'password'=>$request->input('password'),
+            // 'is_admin' => 1  
         ]);
-return redirect()->back()->with('success', 'Registered successfully!');
+        return redirect()->back()->with('success', 'Registered successfully!');
 
 
     }
@@ -51,6 +52,11 @@ return redirect()->back()->with('success', 'Registered successfully!');
         // }
         if(Auth::attempt(['name' => $credentials['username'], 'password' => $credentials['password']])){
             // Authentication passed
+            if(auth()->user()->isAdmin()){
+                            return redirect()->intended('/admin/dashboard'); // Redirect to a dashboard or home page
+
+
+            }
             return redirect()->intended('/dashboard'); // Redirect to a dashboard or home page
         }
 

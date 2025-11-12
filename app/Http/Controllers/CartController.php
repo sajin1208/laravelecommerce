@@ -98,21 +98,36 @@ else{
     {
         $userId = Auth::id();
         $cartItems = Cart::where('user_id',$userId)->with('product')->get();
-        // $totalprice = $cartItems->sum('total_price');
+        $totalprice = $cartItems->sum('total_price');
+
+            $request->validate([
+                'user_name' => 'required|string|max:20',
+                'user_email' => 'required|string|max:255',
+                'user_phone_number' => 'required|string|max:255',
+                 'payment_mode' => 'required',
+                ]
+
+            );
 
         foreach($cartItems as $items)
         orders::create([
+            'user_name' => $request->input('user_name'),
+            'user_email' => $request->input('user_email'),
+            'user_phone_number' => $request->input('user_phone_number'),
+            'payment_mode' => $request->input('payment_mode'),
             'user_id' => $userId,
             'product_name' => $items->product->product_name,
             'quantity' => $items->quantity,
-                'order_status' => 'Pending', // Default status
-
-            // 'total_price' => $request->input($totalprice),
+            'order_status' => 'Pending', // Default status
+            'total_price' => $request->input($totalprice),
         ]);
+    
 
         Cart::where('user_id', $userId)->delete();
 
-        return redirect()->route('checkout.success')->with('checkoutsuccess', 'Your Order is confirmed');
+        
+
+        return redirect()->route('cart.store')->with('checkoutsuccess', 'Your Order is confirmed');
     }
 
     public function Cartcount()
@@ -124,6 +139,9 @@ else{
     return response()->json(['count' =>$count]);
     }
 
+    public function success(){
+        return view('successmessage');
+    }
 
 }
 

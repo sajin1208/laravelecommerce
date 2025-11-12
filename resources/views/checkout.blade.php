@@ -34,6 +34,11 @@
                 </tr>
             @endforeach
         </tbody>
+
+        <div class="orders-container">
+            <label for name="name">Name:
+            <input type="text" id="name">
+        </div>
 <div class="checkform">
     <form action="{{ route('checkout.success') }}" method="POST">
         @csrf

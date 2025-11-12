@@ -3,18 +3,28 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Category; // Add this line
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Auth;
 
 class CustomerController extends BaseController
 {
     public function index()
     {
-        return view('createproduct');
+        $categories = Category::all();
+        return view('createproduct', compact('categories'));
+    }
+
+    public function adminshow(){
+
+        $products = Product::all();
+        return view('dashboard', compact('products'));
     }
 
     public function store(Request $request)
     {
+        // dd($request->all());
         $request->validate([
             'product_name' => 'required|string|max:255',
             'product_quantity' => 'required|string|max:255',
@@ -30,10 +40,12 @@ class CustomerController extends BaseController
             $request->product_image->move(public_path('images'), $imageName);
         }
 
+        
         Product::create([
             'product_name' => $request->input('product_name'),
             'product_quantity' => $request->input('product_quantity'),
             'product_price' => $request->input('product_price'),
+            // 'product_price' => $request->product_category,
             'product_category' => $request->input('product_category'),
             'product_description' => $request->input('product_description'),
             'product_image' => $imageName,

@@ -60,6 +60,29 @@
         </div>
         </div>
 
+
+        <div class="form-container">
+            <form action="{{ route('checkout.success') }}" method="POST">
+                @csrf
+                <label for name="name">Name:
+                <input type="text" id="name"/><br/>
+
+                <label for name="email">Email:
+                <input type="text" id="email"/><br/>
+
+                <label for name="email">Phone-Number:
+                <input type="number" id="phone"/><br/>
+                
+                <label for name="email">Payement Options:
+                <select>
+                    <option value="COD">COD</option>
+                </select><br/>
+
+                <input type="submit" value="Submit">
+            </form>
+
+        </div>
+
     </body>
 
     <footer>

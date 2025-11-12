@@ -15,7 +15,10 @@ class MiddleWare
      */
     public function handle(Request $request, Closure $next): Response
     {
-             
+        if(auth()->user()->isAdmin())
+        {
         return $next($request);
+        }
+        dd("Unauthoriazed");
     }
 }

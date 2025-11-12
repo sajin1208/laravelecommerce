@@ -13,6 +13,11 @@ class orders extends Model
     public $timestamps = true;
 
     protected $fillable = [
+
+        'user_name',
+        'user_email',
+        'user_phone_number',
+        'payment_mdoe',
         'user_id',
         'product_name',
         'quantity',

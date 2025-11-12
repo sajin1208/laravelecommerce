@@ -50,7 +50,7 @@ class CategoryController
 
     public function categoryshow()
     {
-        $categories = Category::all();
+        $categories = Category::with('products')->get();
         return view('categorylist', compact('categories'));
     }
     public function destroy($id)

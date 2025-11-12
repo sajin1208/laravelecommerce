@@ -7,7 +7,9 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CartController;
+use App\Http\Middleware\AuthMiddleware;
 use App\Models\Cart;
+use App\Models\User;
 
 Route::get('/', function () {
     return view('welcome');
@@ -23,8 +25,7 @@ Route::get('/contact', function () {
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
 // });
-Route::get('/dashboard', [DashboardController::class, 'homeshow'])->name('dashoard.show');
-
+Route::get('/dashboard', [DashboardController::class, 'homeshow'])->name('dashoard.show')->middleware('auth');
 
 Route::get('/register', [LoginController::class, 'showRegistrationForm'])->name('register.form');
 Route::post('/register', [LoginController::class, 'register'])->name('register.submit');
@@ -47,7 +48,7 @@ Route::delete('/products/{id}', [CustomerController::class, 'destroy'])->name('p
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 // Category
-Route::get('/createcategory', [CategoryController::class, 'categoryindex'])->name('category.index');
+Route::get('/createcategory', [CategoryController::class, 'categoryindex'])->name('category.index')->middleware(AuthMiddleware::class);
 Route::post('/createcategory', [CategoryController::class, 'categorystore'])->name('category.store');
 
 Route::get('/editcategory/{id}/edit', [CategoryController::class, 'categoryedit'])->name('category.edit');
@@ -71,8 +72,19 @@ Route::delete('/cart/clear', [CartController::class, 'cartclear'])->name('cart.c
 //     return view('checkout');
 // })->name('checkout')->middleware('auth');
 
+Route::get('/successmessage', [CartController::class, 'success'])->name('successmessage');
 
 Route::get('/checkout', [CartController::class, 'checkout'])->name('checkout')->middleware('auth');
 Route::get('/checkout/success', [CartController::class, 'checkoutSuccess'])->name('checkout.success')->middleware('auth');
 
 Route::get('/cart/count', [CartController::class, 'Cartcount'])->name('cart.count')->middleware('auth');
+
+// Route::get('/admin/dashboard', [CustomerController::class, 'adminshow'])->name('admin.show')->middleware(AuthMiddleware::class);
+
+Route::middleware([
+'auth','adminauth'])->group(function (){
+        Route::get('/admin/dashboard', [CustomerController::class, 'adminshow'])->name('admin.show');
+
+});
+
+// Route::post('/cart/store/', [CartController::class, 'cartstore'])->name('cart.store')->middleware('auth');

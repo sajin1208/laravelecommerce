@@ -115,4 +115,14 @@ return [
         'name' => env('MAIL_FROM_NAME', 'Example'),
     ],
 
+    //mailtrap
+    'default' => env('MAIL_MAILER', 'mailgun'),
+
+    'mailgun' => [
+    'transport' => 'mailgun',
+    // 'client' => [
+    //     'timeout' => 5,
+    // ],
+],
+
 ];

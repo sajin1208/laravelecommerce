@@ -19,7 +19,9 @@ return new class extends Migration
             $table->string('product_category');
             $table->string('product_description');
             $table->string('product_image');
+            
             $table->timestamps();
+
         });
     }
 

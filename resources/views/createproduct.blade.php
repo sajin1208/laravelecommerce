@@ -155,8 +155,14 @@
         </div>
 
         <div>
-            <label for="product_name">Product Category:</label>
-            <input type="text" id="product_category" name="product_category" required>
+            <label for="product_category">Product Category:</label>
+            <select id="product_category" name="product_category" required>
+                <option value="">Select Category</option>
+
+            @foreach($categories as $category)
+                <option value="{{ $category->category_id }}">{{ $category->category_name }}</option>
+            @endforeach
+            </select>
         </div>
 
         <div>
