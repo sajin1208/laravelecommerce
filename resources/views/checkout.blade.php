@@ -15,34 +15,34 @@
 
     </div>
     
-    <table border="1">
-        <thead>
-            <tr>
-                <th>S.N</th>
-                <th>Product Name</th>
-                <th>Quantity</th>
-                <th>Total Price</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($cartItems as $index => $cart)
-                <tr>
-                    <td>{{ ++$index }}</td>
-                    <td>{{ $cart->product->product_name }}</td>
-                    <td>{{ $cart->quantity }}</td>
-                    <td>{{ $cart->total_price }}</td>
-                </tr>
-            @endforeach
-        </tbody>
+
 
         <div class="orders-container">
+            <form action= {{route('checkout')}} method="POST">
+                        @csrf
+
             <label for name="name">Name:
-            <input type="text" id="name">
-        </div>
-<div class="checkform">
-    <form action="{{ route('checkout.success') }}" method="POST">
-        @csrf
-        <button type="submit">Confirm Order</button>
+            <input type="text" id="user_name" name="name"><br/>
+
+             <label for name="email">Email:
+            <input type="text" id="user_email" name="email">
+            @error('email')
+                <p class="bg-red">{{$message}}</p>
+            @enderror
+            <br/>
+
+             <label for name="phone_number">Phone Number:
+            <input type="text" id="user_phone_number" name="phone_number"> <br/>
+
+             <label for name="select">Payment Mode:
+                <select id="payment_mode" name="payment_mode">
+                    <option value="COD">COD</option>
+                </select><br/>
+
+                        <button type="submit">Confirm Order</button>
+
+            </form>
+        </div><br/>
 </div>
 </body>
 </html>

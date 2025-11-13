@@ -28,7 +28,7 @@
             </thead>
             <tbody>
 
-                @foreach($carts as $cart)
+                @foreach($cartItems as $cart)
                     <tr>
                         <td>{{ $cart->cart_id }}</td>
                         <td>{{ $cart->product->product_name}}</td>
@@ -56,33 +56,9 @@
         </div>
 
         <div class="checkout">
-        <a href="{{ route('checkout.success') }}">Proceed to Checkout</a>
+            <a href="{{ route('checkout.index') }}"> Checkout</a>
         </div>
         </div>
-
-
-        <div class="form-container">
-            <form action="{{ route('checkout.success') }}" method="POST">
-                @csrf
-                <label for name="name">Name:
-                <input type="text" id="name"/><br/>
-
-                <label for name="email">Email:
-                <input type="text" id="email"/><br/>
-
-                <label for name="email">Phone-Number:
-                <input type="number" id="phone"/><br/>
-                
-                <label for name="email">Payement Options:
-                <select>
-                    <option value="COD">COD</option>
-                </select><br/>
-
-                <input type="submit" value="Submit">
-            </form>
-
-        </div>
-
     </body>
 
     <footer>

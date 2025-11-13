@@ -8,10 +8,13 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CartController;
 use App\Http\Middleware\AuthMiddleware;
+use App\Mail\WelcomeMail;
 use App\Models\Cart;
 use App\Models\User;
+use Illuminate\Support\Facades\Mail;
 
 Route::get('/', function () {
+    Mail::to('dipeshkhanal79@gmail.com')->queue(new WelcomeMail());
     return view('welcome');
 });
 
@@ -72,10 +75,10 @@ Route::delete('/cart/clear', [CartController::class, 'cartclear'])->name('cart.c
 //     return view('checkout');
 // })->name('checkout')->middleware('auth');
 
-Route::get('/successmessage', [CartController::class, 'success'])->name('successmessage');
 
-Route::get('/checkout', [CartController::class, 'checkout'])->name('checkout')->middleware('auth');
-Route::get('/checkout/success', [CartController::class, 'checkoutSuccess'])->name('checkout.success')->middleware('auth');
+Route::get('/checkout', [CartController::class, 'checkoutshow'])->name('checkout.index')->middleware('auth');
+Route::post('/checkout', [CartController::class, 'checkout'])->name('checkout')->middleware('auth');
+Route::post('/checkout/success', [CartController::class, 'checkoutSuccess'])->name('checkout.success')->middleware('auth');
 
 Route::get('/cart/count', [CartController::class, 'Cartcount'])->name('cart.count')->middleware('auth');
 
@@ -87,4 +90,4 @@ Route::middleware([
 
 });
 
-// Route::post('/cart/store/', [CartController::class, 'cartstore'])->name('cart.store')->middleware('auth');
+Route::post('/cart/store/', [CartController::class, 'cartstore'])->name('cart.store')->middleware('auth');

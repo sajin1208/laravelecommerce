@@ -14,14 +14,14 @@ class orders extends Model
 
     protected $fillable = [
 
+        'user_id',
         'user_name',
         'user_email',
         'user_phone_number',
-        'payment_mdoe',
-        'user_id',
         'product_name',
         'quantity',
         'order_status',
+        'payment_mode',
 
     ];
 }
